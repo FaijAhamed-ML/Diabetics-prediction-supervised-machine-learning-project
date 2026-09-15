@@ -33,10 +33,10 @@ also trains a baseline KNN classifier to confirm the processed data is model-rea
 |---|---|---|---|
 | `IT25101611` | Thamoddaya W.M.R. | Handling missing data (verification + validated imputer) | `notebooks/IT25101611_Missing_Data_Handling.ipynb` |
 | `IT25101557` | Hiruni kawya | Encoding categorical variables (ordinal + one-hot) | `notebooks/IT25101557_Encoding_Categorical_Variables.ipynb` |
-| `IT_Number` | Member 3 | Outlier detection & treatment (IQR capping) | `notebooks/IT_Number_Outlier_Removal.ipynb` |
+| `IT25101492` | Lakshith R. | Outlier detection & treatment (IQR capping) | `notebooks/IT25101492_Outlier_Removal.ipynb` |
 | `IT25101505` | FAIJ AHAMED.ML | Normalization / scaling (StandardScaler) | `notebooks/IT25101505_Normalization_Scaling.ipynb` |
 | `IT25101565` | Dharshika.T | Feature engineering & selection (leakage removal, correlation-based selection, new feature) | `notebooks/IT25101565_Feature_Engineering.ipynb` |
-| `IT_Number` | Member 6 | Dimensionality reduction (PCA, scree plot, 2D class-separability projection) | `notebooks/IT_Number_Dimensionality_Reduction.ipynb` |
+| `IT25101588` | Uditha Banuka | Dimensionality reduction (PCA, scree plot, 2D class-separability projection) | `notebooks/IT25101588_Dimensionality_Reduction.ipynb` |
 
 
 ## 4. Pipeline Flow
@@ -45,10 +45,10 @@ also trains a baseline KNN classifier to confirm the processed data is model-rea
 raw CSV
   -> Stage 1: Missing data check & duplicate removal      (Thamoddaya)
   -> Stage 2: Categorical encoding (ordinal + one-hot)     (Hiruni kawya)
-  -> Stage 3: Outlier detection & IQR capping              (Member 3)
+  -> Stage 3: Outlier detection & IQR capping              (Lakshith)
   -> Stage 4: StandardScaler normalization                 (FAIJ AHAMED-LEAD)
   -> Stage 5: Leakage removal + feature selection/engineering (Dharshika)
-  -> Stage 6: Dimensionality reduction / PCA (Member 6, optional alt. representation)
+  -> Stage 6: Dimensionality reduction / PCA (Uditha Banuka, optional alt. representation)
   -> Train/test split -> SMOTE (train only) -> baseline KNN model (on Stage 5 features)
   -> results/outputs/final_processed_dataset.csv
 ```
@@ -106,10 +106,10 @@ Group_ID/
 ├── notebooks/
 │   ├── IT25101611_Missing_Data_Handling.ipynb
 │   ├── IT25101557_Encoding_Categorical_Variables.ipynb
-│   ├── IT_Number_Outlier_Removal.ipynb
+│   ├── IT25101492_Outlier_Removal.ipynb
 │   ├── IT25101505_Normalization_Scaling.ipynb
 │   ├── IT25101565_Feature_Engineering.ipynb
-│   └── IT_Number_Dimensionality_Reduction.ipynb
+│   └── IT25101588_Dimensionality_Reduction.ipynb
 └── results/
     ├── eda_visualizations/           # PNG charts referenced above
     ├── logs/                         # (reserved for execution logs)
