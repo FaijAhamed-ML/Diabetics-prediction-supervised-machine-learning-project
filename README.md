@@ -34,7 +34,7 @@ also trains a baseline KNN classifier to confirm the processed data is model-rea
 | `IT25101611` | Thamoddaya W.M.R. | Handling missing data (verification + validated imputer) | `notebooks/IT25101611_Missing_Data_Handling.ipynb` |
 | `IT25101557` | Hiruni kawya | Encoding categorical variables (ordinal + one-hot) | `notebooks/IT25101557_Encoding_Categorical_Variables.ipynb` |
 | `IT25101492` | Lakshith R. | Outlier detection & treatment (IQR capping) | `notebooks/IT25101492_Outlier_Removal.ipynb` |
-| `IT25101505` | FAIJ AHAMED.ML | Normalization / scaling (StandardScaler) | `notebooks/IT25101505_Normalization_Scaling.ipynb` |
+| `IT25101505` | FAIJ AHAMED.ML | Normalization / scaling (StandardScaler) & LEAD | `notebooks/IT25101505_Normalization_Scaling.ipynb` |
 | `IT25101565` | Dharshika.T | Feature engineering & selection (leakage removal, correlation-based selection, new feature) | `notebooks/IT25101565_Feature_Engineering.ipynb` |
 | `IT25101588` | Uditha Banuka | Dimensionality reduction (PCA, scree plot, 2D class-separability projection) | `notebooks/IT25101588_Dimensionality_Reduction.ipynb` |
 
