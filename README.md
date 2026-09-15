@@ -97,7 +97,7 @@ cd notebooks
 ## 7. Repository Layout
 
 ```
-Group_ID/
+2026-Y2-S1-MLB-WEB2G1-02/
 ├── README.md
 ├── 2026-Y2-S1-MLB-WEB2G1-02_pipeline.ipynb
 ├── data/
