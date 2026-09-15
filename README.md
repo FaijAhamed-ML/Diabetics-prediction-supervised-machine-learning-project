@@ -104,12 +104,12 @@ Group_ID/
 │   ├── raw/                          # assigned dataset
 │   └── external/                     # (unused — no external reference data was needed)
 ├── notebooks/
-│   ├── IT25101611_Missing_Data_Handling.ipynb
-│   ├── IT25101557_Encoding_Categorical_Variables.ipynb
-│   ├── IT25101492_Outlier_Removal.ipynb
-│   ├── IT25101505_Normalization_Scaling.ipynb
-│   ├── IT25101565_Feature_Engineering.ipynb
-│   └── IT25101588_Dimensionality_Reduction.ipynb
+│   ├── 01.IT25101611_Missing_Data_Handling.ipynb
+│   ├── 02.IT25101557_Encoding_Categorical_Variables.ipynb
+│   ├── 03.IT25101492_Outlier_Removal.ipynb
+│   ├── 04.IT25101505_Normalization_Scaling.ipynb
+│   ├── 05.IT25101565_Feature_Engineering.ipynb
+│   └── 06.IT25101588_Dimensionality_Reduction.ipynb
 └── results/
     ├── eda_visualizations/           # PNG charts referenced above
     ├── logs/                         # (reserved for execution logs)
