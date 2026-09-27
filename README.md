@@ -1,139 +1,139 @@
-# IT2011 — Progress Review I: Data Preprocessing and EDA
-## Diabetes and LifeStyle Dataset
+# 2026-Y2-S1-MLB-WEB2G1-02 — Diabetes Stage Prediction
+## IT2011 Artificial Intelligence and Machine Learning — Full Project
 
-**Module:** IT2011 - Artificial Intelligence and Machine Learning
+**Module:** IT2011 — Artificial Intelligence and Machine Learning
 **Year 2, Semester 1 (2026)** — Faculty of Computing
+**Dataset:** Diabetes and LifeStyle Dataset (97,297 records, 31 columns)
 
 ---
 
 ## 1. Project Overview
 
-This deliverable applies data cleaning, preprocessing, and exploratory data analysis (EDA) to
-the assigned **Diabetes and LifeStyle Dataset** (97,297 records, 31 columns), covering
-demographic, lifestyle, and clinical features used to predict a patient's **diabetes stage**
-(`No Diabetes`, `Pre-Diabetes`, `Gestational`, `Type 2`, `Type 1`).
+This repository contains the group's complete coursework for IT2011, covering both graded
+milestones:
 
-Each group member independently implemented and validated one preprocessing technique, and the
-group integrated all six into a single, reproducible pipeline (`2026-Y2-S1-MLB-WEB2G1
--02_pipeline.ipynb`) that also trains a baseline KNN classifier to confirm the processed data
-is model-ready.
+1. **Progress Review I — Data Preprocessing & EDA** (`for Progress/`): six group members each
+   implemented and validated one preprocessing technique, integrated into a single reproducible
+   pipeline, cleaning and preparing the raw clinical + lifestyle dataset for modelling and
+   producing a balanced train/test split.
+2. **Progress Review II — Model Implementation & Comparison** (`for final/Final Implementation/`):
+   each member trained one individual machine learning model on the Stage 6 processed data, and
+   the group compared all six models' results in a shared discussion notebook.
 
-## 2. Dataset
+The overall goal across both phases is to predict a patient's **diabetes stage**
+(`No Diabetes`, `Pre-Diabetes`, `Gestational`, `Type 2` — `Type 1` dropped, see Section 3) from
+demographic, lifestyle, and clinical features.
 
-- **File:** `data/raw/Diabetes_and_LifeStyle_Dataset_.csv`
-- **Rows / Columns:** 97,297 x 31
-- **Target:** `diabetes_stage` (5 classes as provided, severely imbalanced — `Type 2` and
-  `Pre-Diabetes` dominate; `Type 1` is dropped during balancing, see Section 5)
-- **Feature groups:** demographics (age, gender, ethnicity, education, income, employment),
-  lifestyle (smoking, alcohol, physical activity, diet score, sleep, screen time), and clinical
-  measurements (BMI, blood pressure, cholesterol panel, glucose, insulin, HbA1c).
+## 2. Repository Layout
 
-## 3. Group Member Roles
+```
+aimly2s1/
+├── README.md                          # this file
+├── for Progress/                      # Progress Review I — preprocessing & EDA
+│   ├── README.md                      # detailed write-up for this phase
+│   ├── 2026-Y2-S1-MLB-WEB2G1-02_pipeline.ipynb   # integrated 6-stage pipeline + baseline KNN
+│   ├── data/
+│   │   ├── raw/                       # assigned dataset (CSV)
+│   │   └── external/                  # (unused)
+│   ├── notebooks/                     # one notebook per member, per technique
+│   │   ├── 01.IT25101611_Missing_Data_Handling.ipynb
+│   │   ├── 02.IT25101557_Encoding_Categorical_Variables.ipynb
+│   │   ├── 03.IT25101492_Outlier_Removal.ipynb
+│   │   ├── 04.IT25101505_Normalization_Scaling.ipynb
+│   │   ├── 05.IT25101565_Feature_Engineering.ipynb
+│   │   └── 06.IT25101588_Class_Balancing.ipynb
+│   └── results/
+│       ├── eda_visualizations/        # charts (missing data, outliers, scaling, correlations…)
+│       ├── logs/                      # (reserved)
+│       └── outputs/                   # stage-by-stage checkpoint CSVs + final processed dataset
+└── for final/
+    └── Final Implementation/          # Progress Review II — individual models + comparison
+        ├── group_comparison.ipynb     # group results table + discussion (see Section 4)
+        └── notebooks/                 # one model per member, trained on Stage 6 data
+            ├── 01.IT25101505_RandomForest_Model.ipynb
+            ├── 02IT25101492._DecisionTree_Model.ipynb
+            ├── 03.IT25101588_MLP_DeepLearning_Model.ipynb
+            ├── 04.IT25101611_LogisticRegression_Model.ipynb
+            ├── 05.IT25101557_KNN_Model.ipynb
+            └── 06.IT25101565_KMeans_Clustering_Model.ipynb
+```
 
-| IT Number | Member | Preprocessing Technique | Notebook |
-|---|---|---|---|
-| `IT25101611` | Thamoddaya W.M.R. | Handling missing data (verification + validated imputer) | `notebooks/IT25101611_Missing_Data_Handling.ipynb` |
-| `IT25101557` | Hiruni kawya | Encoding categorical variables (ordinal + one-hot) | `notebooks/IT25101557_Encoding_Categorical_Variables.ipynb` |
-| `IT25101492` | Lakshith R. | Outlier detection & treatment (IQR capping) | `notebooks/IT25101492_Outlier_Removal.ipynb` |
-| `IT25101505` | FAIJ AHAMED.ML | Normalization / scaling (StandardScaler) & LEAD | `notebooks/IT25101505_Normalization_Scaling.ipynb` |
-| `IT25101565` | Dharshika.T | Feature engineering & selection (leakage removal, correlation-based selection, new feature) | `notebooks/IT25101565_Feature_Engineering.ipynb` |
-| `IT25101588` | Uditha Banuka | Class imbalance handling (hybrid: under-sampling + SMOTE + Tomek-link cleaning) | `notebooks/06.IT25101588_Class_Balancing.ipynb` |
+## 3. Phase 1 — Preprocessing & EDA (`for Progress/`)
 
-
-## 4. Pipeline Flow
+Six stages, each implemented and validated by a different member, chained into one pipeline:
 
 ```
 raw CSV
-  -> Stage 1: Missing data check & duplicate removal          (Thamoddaya)
-  -> Stage 2: Categorical encoding (ordinal + one-hot)         (Hiruni kawya)
-  -> Stage 3: Outlier detection & IQR capping                  (Lakshith)
-  -> Stage 4: StandardScaler normalization                     (FAIJ AHAMED-LEAD)
-  -> Stage 5: Leakage removal + feature selection/engineering  (Dharshika)
-  -> Stage 6: Class imbalance handling — drop Type 1, then     (Uditha Banuka)
-              under-sample majority + SMOTE minorities +
-              Tomek-link clean (training split only)
-  -> baseline KNN model (trained on Stage 6 balanced split,
-     evaluated on Stage 6 untouched test split)
+  -> Stage 1: Missing data check & duplicate removal
+  -> Stage 2: Categorical encoding (ordinal + one-hot)
+  -> Stage 3: Outlier detection & IQR capping
+  -> Stage 4: StandardScaler normalization
+  -> Stage 5: Leakage removal + feature selection/engineering
+  -> Stage 6: Class imbalance handling (drop Type 1, under-sample majority,
+              SMOTE minorities, Tomek-link cleaning — training split only)
+  -> baseline KNN model
   -> results/outputs/final_processed_dataset.csv
 ```
 
-Each individual notebook reads the previous stage's checkpoint CSV from `results/outputs/` and
-writes its own checkpoint forward, so the six notebooks can also be run independently in order
-1 -> 6. `2026-Y2-S1-MLB-WEB2G1-02_pipeline.ipynb` re-implements the same six stages end-to-end
-in one run and adds the model-training step, serving as the "integrated" deliverable.
+Key findings: the raw data was already clean (no missing values, no duplicates); `hba1c`,
+`glucose_fasting`, and `glucose_postprandial` are the strongest predictors of diabetes stage;
+the target was severely imbalanced and was rebalanced with a hybrid under-sampling + SMOTE +
+Tomek-link approach; a baseline KNN reached ~70% test accuracy (weighted F1 ≈ 0.74) on the
+untouched, imbalanced test set.
 
-Stage 6 first splits the data (train/test) and then, on the **training split only**:
+Full details, member roles, and reasoning are in `for Progress/README.md`.
 
-1. Drops `Type 1` — with only 94 training rows, forcing it up to the majority count
-   (46,530) via SMOTE would require ~495x synthetic growth per real example, which mostly
-   repeats a handful of directions in feature space rather than adding real signal.
-2. Random-under-samples the majority class (`Type 2`) down to the size of the next-largest
-   class (`Pre-Diabetes`, ~24,810), instead of using the full majority as the balancing target.
-3. SMOTE-oversamples the minority classes (`No Diabetes`, `Gestational`) up to that same
-   target.
-4. Applies Tomek-link cleaning to remove ambiguous, closely-overlapping class-boundary pairs
-   created by the resampling.
+## 4. Phase 2 — Individual Models & Group Comparison (`for final/Final Implementation/`)
 
-This produces `stage6_train_balanced.csv` (4 classes, ~23k–25k rows each) and
-`stage6_test_holdout.csv` (untouched, still-imbalanced, 4 classes) — the baseline KNN model
-trains on the former and is evaluated on the latter, so reported accuracy stays representative
-of the real, imbalanced clinical population. See Member 6's notebook for the full before/after
-class-distribution analysis and reasoning.
+Each member trained one model family on the shared `stage6_train_balanced.csv` /
+`stage6_test_holdout.csv` split produced in Phase 1, so all results are directly comparable:
 
-## 5. Key Findings (EDA)
+| Member | Model | Notebook |
+|---|---|---|
+| Ahamed M.L.F. | Random Forest | `01.IT25101505_RandomForest_Model.ipynb` |
+| Lakshith R. | Decision Tree | `02IT25101492._DecisionTree_Model.ipynb` |
+| Wikramasundara D.G.U.B. | MLP (Deep Learning, Keras/TensorFlow) | `03.IT25101588_MLP_DeepLearning_Model.ipynb` |
+| Thamoddaya W.M.R. | Logistic Regression (multinomial) | `04.IT25101611_LogisticRegression_Model.ipynb` |
+| Hiruni Kawya | K-Nearest Neighbors | `05.IT25101557_KNN_Model.ipynb` |
+| Dharshika T. | K-Means Clustering (unsupervised) | `06.IT25101565_KMeans_Clustering_Model.ipynb` |
 
-- The dataset arrived **clean**: 0 explicit missing values, 0 duplicate rows, 0 implausible
-  clinical readings.
-- The target class is **severely imbalanced** across all 5 classes (training split):
-  `Type 2` 46,530, `Pre-Diabetes` 24,810, `No Diabetes` 6,190, `Gestational` 214, `Type 1` 94.
-- `hba1c`, `glucose_fasting`, and `glucose_postprandial` are by far the strongest predictors of
-  `diabetes_stage`, consistent with clinical diagnostic criteria.
-- `triglycerides`, `insulin_level`, and `hba1c` had the most IQR-flagged outliers; these were
-  **capped, not deleted**, to avoid removing genuine diabetic patients from the minority classes.
-- `diagnosed_diabetes` and `diabetes_risk_score` were dropped as **target-leakage** columns.
-- `Type 1` was dropped before balancing — too few real examples (94) to resample without
-  manufacturing near-duplicate synthetic data. The remaining 4 classes were balanced with a
-  **hybrid** technique (under-sample majority + SMOTE minorities + Tomek-link cleaning) rather
-  than plain SMOTE-to-majority, bringing all 4 classes to ~23,000–25,000 training rows each
-  with a far smaller synthetic-growth factor for `Gestational` than matching the true majority
-  would have required.
-- A baseline KNN classifier trained on the balanced split reached **~70% test accuracy**
-  (weighted F1 ≈ 0.74) on the untouched, imbalanced 4-class test set. `No Diabetes` recall rose
-  sharply (0.90) at the cost of precision (0.47), and `Gestational` remains very hard to
-  predict (53 test rows, 214 real training rows) even after balancing — a good discussion
-  point for the viva on the limits of resampling versus needing more real minority-class data.
+**Result ranking (weighted F1 on the untouched, imbalanced test set):**
 
-All supporting charts are saved in `results/eda_visualizations/`.
+Random Forest (0.905) > Decision Tree (0.865) > MLP (0.793) > Logistic Regression (0.767) ≈
+PCA + Logistic Regression (0.739) > K-Means (unsupervised, Adjusted Rand Index ≈ 0.17)
 
-## 6. How to Run
+**Summary of the group discussion** (`group_comparison.ipynb`):
+- Non-linear models (Random Forest, Decision Tree, MLP) outperformed the linear baseline,
+  confirming the diabetes-stage boundaries are not linear in the clinical feature space.
+- The `Gestational` class (only 53 test rows) was the hardest to predict across every model.
+- K-Means clusters did not align with the true clinical labels, since diabetes stages are
+  defined by threshold ranges on markers like HbA1c rather than naturally separated groupings.
+- Suggested future work: gradient-boosted trees (XGBoost/LightGBM), training the MLP on the
+  full balanced set with a learning-rate schedule, and collecting more real `Gestational`
+  examples rather than relying further on synthetic resampling.
+
+## 5. How to Run
 
 ```bash
-pip install pandas numpy matplotlib scikit-learn imbalanced-learn jupyter
+pip install pandas numpy matplotlib scikit-learn imbalanced-learn tensorflow jupyter
 
-# Run an individual member's notebook (from the notebooks/ folder, in order 1 -> 6)
-cd notebooks
+# Phase 1 — preprocessing (run in order 1 -> 6, or run the integrated pipeline notebook)
+cd "for Progress/notebooks"
 
-# Run the full integrated pipeline (from the 2026-Y2-S1-MLB-WEB2G1-02/ root)
+# Phase 2 — models (each notebook loads results/outputs/stage6_*.csv from Phase 1)
+cd "for final/Final Implementation/notebooks"
+
+# Group comparison & discussion
+# open "for final/Final Implementation/group_comparison.ipynb"
 ```
 
-## 7. Repository Layout
+## 6. Group Member Roles (Both Phases)
 
-```
-2026-Y2-S1-MLB-WEB2G1-02/
-├── README.md
-├── 2026-Y2-S1-MLB-WEB2G1-02_pipeline.ipynb
-├── data/
-│   ├── raw/                          # assigned dataset
-│   └── external/                     # (unused — no external reference data was needed)
-├── notebooks/
-│   ├── 01.IT25101611_Missing_Data_Handling.ipynb
-│   ├── 02.IT25101557_Encoding_Categorical_Variables.ipynb
-│   ├── 03.IT25101492_Outlier_Removal.ipynb
-│   ├── 04.IT25101505_Normalization_Scaling.ipynb
-│   ├── 05.IT25101565_Feature_Engineering.ipynb
-│   └── 06.IT25101588_Class_Balancing.ipynb
-└── results/
-    ├── eda_visualizations/           # PNG charts referenced above
-    ├── logs/                         # (reserved for execution logs)
-    └── outputs/                      # stage-by-stage + final processed CSVs
-```
+| IT Number | Member | Preprocessing (PR I) | Model (PR II) |
+|---|---|---|---|
+| IT25101611 | Thamoddaya W.M.R. | Missing data handling | Logistic Regression |
+| IT25101557 | Hiruni Kawya | Encoding categorical variables | K-Nearest Neighbors |
+| IT25101492 | Lakshith R. | Outlier detection & treatment | Decision Tree |
+| IT25101505 | Ahamed M.L.F. (Lead) | Normalization / scaling | Random Forest |
+| IT25101565 | Dharshika T. | Feature engineering & selection | K-Means Clustering |
+| IT25101588 | Wikramasundara D.G.U.B. (Uditha Banuka) | Class imbalance handling | MLP Deep Learning |
