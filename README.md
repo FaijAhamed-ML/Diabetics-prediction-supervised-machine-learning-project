@@ -112,22 +112,7 @@ PCA + Logistic Regression (0.739) > K-Means (unsupervised, Adjusted Rand Index �
   full balanced set with a learning-rate schedule, and collecting more real `Gestational`
   examples rather than relying further on synthetic resampling.
 
-## 5. How to Run
-
-```bash
-pip install pandas numpy matplotlib scikit-learn imbalanced-learn tensorflow jupyter
-
-# Phase 1 — preprocessing (run in order 1 -> 6, or run the integrated pipeline notebook)
-cd "for Progress/notebooks"
-
-# Phase 2 — models (each notebook loads results/outputs/stage6_*.csv from Phase 1)
-cd "for final/Final Implementation/notebooks"
-
-# Group comparison & discussion
-# open "for final/Final Implementation/group_comparison.ipynb"
-```
-
-## 6. Group Member Roles (Both Phases)
+## 5. Group Member Roles (Both Phases)
 
 | IT Number | Member | Preprocessing (PR I) | Model (PR II) |
 |---|---|---|---|
