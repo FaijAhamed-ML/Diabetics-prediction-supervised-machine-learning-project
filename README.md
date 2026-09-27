@@ -29,7 +29,7 @@ demographic, lifestyle, and clinical features.
 ```
 aimly2s1/
 ├── README.md                          # this file
-├── for Progress/                      # Progress Review I — preprocessing & EDA
+├── 2026-Y2-S1-MLB-WEB2G1-02/          # Progress Review I — preprocessing & EDA
 │   ├── README.md                      # detailed write-up for this phase
 │   ├── 2026-Y2-S1-MLB-WEB2G1-02_pipeline.ipynb   # integrated 6-stage pipeline + baseline KNN
 │   ├── data/
