@@ -9,8 +9,8 @@
 
 ## 1. Project Overview
 
-This repository contains the group's complete coursework for IT2011, covering both graded
-milestones:
+This repository contains the group's complete coursework for IT2011, covering all three
+deliverables:
 
 1. **Progress Review I — Data Preprocessing & EDA** (`for Progress/`): six group members each
    implemented and validated one preprocessing technique, integrated into a single reproducible
@@ -19,8 +19,12 @@ milestones:
 2. **Progress Review II — Model Implementation & Comparison** (`for final/Final Implementation/`):
    each member trained one individual machine learning model on the Stage 6 processed data, and
    the group compared all six models' results in a shared discussion notebook.
+3. **Final Model & GUI Demo** (`for final/finalmodel.ipynb`): the best-performing model family
+   (Random Forest) is tuned with GridSearchCV and wrapped in a desktop **Tkinter GUI** that
+   lets a user enter patient features (or generate random ones) and get a predicted diabetes
+   stage with a confidence score.
 
-The overall goal across both phases is to predict a patient's **diabetes stage**
+The overall goal across all phases is to predict a patient's **diabetes stage**
 (`No Diabetes`, `Pre-Diabetes`, `Gestational`, `Type 2` — `Type 1` dropped, see Section 3) from
 demographic, lifestyle, and clinical features.
 
@@ -29,7 +33,7 @@ demographic, lifestyle, and clinical features.
 ```
 aimly2s1/
 ├── README.md                          # this file
-├── 2026-Y2-S1-MLB-WEB2G1-02/          # Progress Review I — preprocessing & EDA
+├── for Progress/                      # Progress Review I — preprocessing & EDA
 │   ├── README.md                      # detailed write-up for this phase
 │   ├── 2026-Y2-S1-MLB-WEB2G1-02_pipeline.ipynb   # integrated 6-stage pipeline + baseline KNN
 │   ├── data/
@@ -46,8 +50,10 @@ aimly2s1/
 │       ├── eda_visualizations/        # charts (missing data, outliers, scaling, correlations…)
 │       ├── logs/                      # (reserved)
 │       └── outputs/                   # stage-by-stage checkpoint CSVs + final processed dataset
-└── for final/
-    └── Final Implementation/          # Progress Review II — individual models + comparison
+└── for final/                         # Progress Review II + final model & GUI
+    ├── finalmodel.ipynb               # tuned Random Forest + Tkinter prediction GUI (Section 5)
+    ├── sample_outputs_with_GUI_For_testing/   # screenshots of the GUI being tested
+    └── Final Implementation/          # individual models + comparison
         ├── group_comparison.ipynb     # group results table + discussion (see Section 4)
         └── notebooks/                 # one model per member, trained on Stage 6 data
             ├── 01.IT25101505_RandomForest_Model.ipynb
@@ -112,13 +118,66 @@ PCA + Logistic Regression (0.739) > K-Means (unsupervised, Adjusted Rand Index �
   full balanced set with a learning-rate schedule, and collecting more real `Gestational`
   examples rather than relying further on synthetic resampling.
 
-## 5. Group Member Roles (Both Phases)
+## 5. Phase 3 — Final Model & GUI Demo (`for final/finalmodel.ipynb`)
+
+Because Random Forest ranked first in the Phase 2 comparison, it was selected as the final
+model and turned into an interactive demo.
+
+**Model training**
+- Loads `stage6_train_balanced.csv` and `stage6_test_holdout.csv` from
+  `for Progress/results/outputs/` (target: `diabetes_stage_encoded`; classes
+  `0 = No Diabetes`, `1 = Pre-Diabetes`, `2 = Gestational`, `3 = Type 2`).
+- Draws a class-balanced training sample of up to **4,000 rows per class** (`random_state=42`)
+  to keep tuning fast.
+- Tunes a `RandomForestClassifier` with **GridSearchCV** (3-fold CV, scoring = weighted F1) over
+  `n_estimators` ∈ {100, 200}, `max_depth` ∈ {10, 20, None}, `max_features` ∈ {sqrt, log2}.
+- The best estimator is stored as `rf_tuned` and evaluated with accuracy, weighted F1,
+  a classification report and a confusion matrix helper.
+
+**Tkinter GUI — "Diabetes Stage Prediction"**
+- One input field per model feature (19 features: age, physical activity, diet score, family /
+  hypertension / cardiovascular history, BMI, waist-to-hip ratio, systolic & diastolic BP,
+  heart rate, total / HDL / LDL cholesterol, triglycerides, fasting & postprandial glucose,
+  insulin level, HbA1c, pulse pressure).
+- **Predict Diabetes Stage** button — returns the predicted stage and the model's confidence
+  (highest class probability, in %).
+- **Generate Random Data** button — fills every field with a random value within the min/max
+  range seen in the training data, so every class can be tried quickly.
+- Non-numeric input shows an "Invalid input" error dialog.
+- **Note:** the model was trained on the preprocessed (standardized) Stage 6 data, so the GUI
+  expects **scaled feature values** (e.g. `1.58`, `-0.72`), not raw clinical units.
+
+**Sample outputs:** screenshots of the GUI (empty form, random data, and predictions such as
+`Type 2` at 85.50% confidence) are in `for final/sample_outputs_with_GUI_For_testing/`.
+
+## 6. How to Run
+
+```bash
+pip install pandas numpy matplotlib scikit-learn imbalanced-learn tensorflow jupyter
+
+# Phase 1 — preprocessing (run in order 1 -> 6, or run the integrated pipeline notebook)
+cd "for Progress/notebooks"
+
+# Phase 2 — models (each notebook loads results/outputs/stage6_*.csv from Phase 1)
+cd "for final/Final Implementation/notebooks"
+
+# Group comparison & discussion
+# open "for final/Final Implementation/group_comparison.ipynb"
+
+# Phase 3 — final tuned model + GUI (run all cells; the Tkinter window opens at the end)
+# open "for final/finalmodel.ipynb"
+# Requires a desktop environment with Tkinter (bundled with standard Python installs).
+# The notebook reads the data via ../for progress/results/outputs/ — keep the folder
+# structure from Section 2 (and note the folder-name casing on case-sensitive systems).
+```
+
+## 7. Group Member Roles (All Phases)
 
 | IT Number | Member | Preprocessing (PR I) | Model (PR II) |
 |---|---|---|---|
 | IT25101611 | Thamoddaya W.M.R. | Missing data handling | Logistic Regression |
 | IT25101557 | Hiruni Kawya | Encoding categorical variables | K-Nearest Neighbors |
 | IT25101492 | Lakshith R. | Outlier detection & treatment | Decision Tree |
-| IT25101505 | Ahamed M.L.F. (Lead) | Normalization / scaling | Random Forest |
+| IT25101505 | Ahamed M.L.F. (Lead) | Normalization / scaling | Random Forest (also the final tuned model + GUI) |
 | IT25101565 | Dharshika T. | Feature engineering & selection | K-Means Clustering |
 | IT25101588 | Wikramasundara D.G.U.B. (Uditha Banuka) | Class imbalance handling | MLP Deep Learning |
